@@ -1,0 +1,30 @@
+textarea {
+    min-height: 400px;
+}
+
+.mail{
+    display: grid;
+    grid-template-columns: 20% 50% 30%;
+    border: 1px solid #ccc;
+    margin: 1px;
+    padding: 10px;
+}
+
+
+
+.sender{
+    font-weight: bold;
+}
+
+.timestamp{
+    color: gray;
+}
+
+.sender, .subject, .timestamp{
+    width: fit-content;
+}
+
+.timestamp{
+    margin-right: 10px;
+    margin-left: auto;
+}
