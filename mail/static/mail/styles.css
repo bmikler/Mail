@@ -10,6 +10,9 @@ textarea {
     padding: 10px;
 }
 
+.mail:hover{
+    background: lightblue;
+}
 
 
 .sender{
@@ -27,4 +30,17 @@ textarea {
 .timestamp{
     margin-right: 10px;
     margin-left: auto;
+}
+
+#emails-read{
+    padding: 20px;
+}
+
+#emails-read #body{
+    padding: 20px;
+    min-height: 500px;
+}
+
+#emails-read #body #text{
+    font-size: large;
 }
