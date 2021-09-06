@@ -15,39 +15,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     event.preventDefault();
     send_email();
-    load_mailbox('sent');
 
   });
 
 
 });
 
-function read_email(email){
+function read_email(email) {
 
   // Hide mailbox
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#emails-read').style.display = 'block';
 
+  // mark mail as read
+  fetch(`/emails/${email}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      read: true
+    })
+  })
+
   // get mail form API
   fetch(`/emails/${email}`)
-  .then(response => response.json())
-  .then(email => {
-    // Print email
-    console.log(email);
-    // render mail
-    document.querySelector('#sender').innerHTML = `From: <b>${email.sender}</b>`;
-    document.querySelector('#recipients').innerHTML = `To: <b>${email.recipients}</b>`;
-    document.querySelector('#subject').innerHTML = `<h3>${email.subject}</h3>`;
-    document.querySelector('#timestamp').innerHTML = `${email.timestamp}`;
-    document.querySelector('#text').innerHTML = `${email.body}`;
+    .then(response => response.json())
+    .then(email => {
+      // Print email
+      console.log(email);
+      // render mail
+      document.querySelector('#sender').innerHTML = `From: <b>${email.sender}</b>`;
+      document.querySelector('#recipients').innerHTML = `To: <b>${email.recipients}</b>`;
+      document.querySelector('#subject').innerHTML = `<h3>${email.subject}</h3>`;
+      document.querySelector('#timestamp').innerHTML = `${email.timestamp}`;
+      document.querySelector('#text').innerHTML = `${email.body}`;
 
 
-  });
+    });
 
 }
 
-function send_email(){
+function send_email() {
 
   fetch('/emails', {
     method: 'POST',
@@ -59,15 +66,24 @@ function send_email(){
   })
     .then(response => response.json())
     .then(result => {
-      // Print result
+      // check if mail was send 
+      if (result.error) {
+        document.querySelector('#error').style.display = 'block';
+        document.querySelector('#error').innerHTML = result.error;
         console.log(result);
-      
-  });
+      } else {
+        alert(`${result.message}`);
+        // redirect to sent mailbox
+        load_mailbox('sent');
+      }
+
+    });
 }
 
 function compose_email() {
 
   // Show compose view and hide other views
+  document.querySelector('#error').style.display = 'none';
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
   document.querySelector('#emails-read').style.display = 'none';
@@ -106,13 +122,24 @@ function load_mailbox(mailbox) {
           var user = single_mail.sender;
         }
 
-        document.querySelector('#emails-view').innerHTML +=
-          `<div class="mail" id="mail" onclick="read_email(${single_mail.id})">
-          <div class="sender">${user}</div>
+        // Create new mail on the list
+        const element = document.createElement('div');
+        // Add class to div
+        element.classList.add("mail")
+        element.innerHTML = 
+          `<div class="sender">${user}</div>
           <div class="subject">${single_mail.subject}</div>
-          <div class="timestamp">${single_mail.timestamp}</div>
-          </div>`;
+          <div class="timestamp">${single_mail.timestamp}</div>`;
+
+        // ad fucntion to open mail when its onclik
+        element.addEventListener('click', () => read_email(single_mail.id));
+        
+        // add element to the list
+        document.querySelector('#emails-view').append(element);
+
       });
     });
+
+
 
 }
