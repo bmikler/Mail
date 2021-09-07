@@ -21,6 +21,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+function archive_mail(email){
+  fetch(`/emails/${email}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+        archived: true
+    })
+  })
+  load_mailbox('inbox');
+}
+
 function read_email(email) {
 
   // Hide mailbox
@@ -62,6 +72,7 @@ function send_email() {
       recipients: document.querySelector('#compose-recipients').value,
       subject: document.querySelector('#compose-subject').value,
       body: document.querySelector('#compose-body').value,
+      read: false
     })
   })
     .then(response => response.json())
@@ -125,19 +136,25 @@ function load_mailbox(mailbox) {
         // Create new mail on the list
         const element = document.createElement('div');
         // Add class to div
-        element.classList.add("mail")
+        if (single_mail.read == true){
+          element.classList.add("mail-read")
+        } else {
+          element.classList.add("mail-unread")
+        }
         element.innerHTML = 
           `<div class="sender">${user}</div>
           <div class="subject">${single_mail.subject}</div>
-          <div class="timestamp">${single_mail.timestamp}</div>`;
-
-        // ad fucntion to open mail when its onclik
-        element.addEventListener('click', () => read_email(single_mail.id));
-        
+          <div class="timestamp">${single_mail.timestamp}</div>`
+          
         // add element to the list
         document.querySelector('#emails-view').append(element);
 
-      });
+        // ad fucntion to open mail when its onclik
+        element.addEventListener('click', () => read_email(single_mail.id));
+      
+
+      }); 
+
     });
 
 

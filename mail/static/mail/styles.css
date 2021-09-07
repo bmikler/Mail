@@ -2,15 +2,21 @@ textarea {
     min-height: 400px;
 }
 
-.mail{
+
+.mail-read, .mail-unread{
     display: grid;
     grid-template-columns: 20% 50% 30%;
     border: 1px solid #ccc;
     margin: 1px;
     padding: 10px;
+    width: 80%;
 }
 
-.mail:hover{
+.mail-unread{
+    background:lightcyan;
+}
+
+.mail-read:hover, .mail-unread:hover{
     background: lightblue;
 }
 
@@ -19,15 +25,17 @@ textarea {
     font-weight: bold;
 }
 
-.timestamp{
-    color: gray;
-}
 
-.sender, .subject, .timestamp{
+.sender, .subject, .timestamp, #archive-button{
     width: fit-content;
 }
 
 .timestamp{
+    color: gray;
+}
+
+.timestamp, #archive-button{
+    
     margin-right: 10px;
     margin-left: auto;
 }
@@ -44,3 +52,4 @@ textarea {
 #emails-read #body #text{
     font-size: large;
 }
+
