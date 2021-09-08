@@ -29,6 +29,7 @@ function archive_mail(email, status) {
       archived: status
     })
   })
+    .then(() => load_mailbox('inbox'))
 
 }
 
@@ -39,18 +40,20 @@ function read_email(email) {
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#emails-read').style.display = 'block';
 
-  // mark mail as read
-  fetch(`/emails/${email}`, {
-    method: 'PUT',
-    body: JSON.stringify({
-      read: true
-    })
-  })
-
   // get mail form API
   fetch(`/emails/${email}`)
     .then(response => response.json())
     .then(email => {
+
+      // mark mail as read
+      if (email.read == false){
+        fetch(`/emails/${email}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            read: true
+          })
+        })
+      }
 
       // Render mail
       document.querySelector('#sender').innerHTML = `From: <b>${email.sender}</b>`;
@@ -75,14 +78,10 @@ function read_email(email) {
       <div class="btn btn-secondary" id="archive-button">${button_name}</div>`
 
       // archive-button
-      document.querySelector('#archive-button').addEventListener('click', () => {
-        console.log(email.id);
-        archive_mail(email.id, status_to_set);
-        load_mailbox('inbox')
+      document.querySelector('#archive-button').addEventListener('click', () => archive_mail(email.id, status_to_set));
+   
 
-        // Replay butto
-
-      });
+      // Replay butto
 
       document.querySelector('#replay-button').addEventListener('click', () => {
 
