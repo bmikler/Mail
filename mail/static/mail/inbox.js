@@ -29,12 +29,12 @@ function archive_mail(email, status) {
       archived: status
     })
   })
-    .then(load_mailbox('inbox'))
+
 }
 
 function read_email(email) {
 
-  // Hide mailbox
+  // Hide mailbox 
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#emails-read').style.display = 'block';
@@ -63,25 +63,32 @@ function read_email(email) {
       // Check if mail is already archived
       if (email.archived == true) {
         var status_to_set = false;
-        //document.querySelector('#archive-button').innerHTML = 'Unarchive';
+        var button_name = 'Unarchive';
       } else {
         var status_to_set = true;
-        //document.querySelector('#archive-button').innerHTML = 'Archive';
+        var button_name = 'Archive';
       }
 
+      // Create buttons
+      document.querySelector('.mail-buttons').innerHTML =
+        `<div class="btn btn-primary" id="replay-button">Replay</div>
+      <div class="btn btn-secondary" id="archive-button">${button_name}</div>`
+
+      // archive-button
       document.querySelector('#archive-button').addEventListener('click', () => {
         console.log(email.id);
         archive_mail(email.id, status_to_set);
+        load_mailbox('inbox')
+
+        // Replay butto
 
       });
-
-      // Replay button
 
       document.querySelector('#replay-button').addEventListener('click', () => {
 
         alert('TODO')
 
-      })
+      });
 
     });
 
@@ -131,20 +138,20 @@ function compose_email() {
 
 function load_mailbox(mailbox) {
 
-  console.log(`start`);
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#emails-read').style.display = 'none';
-
-  // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 
   // Load mails
   fetch(`/emails/${mailbox}`)
     .then(response => response.json())
     .then(email => {
       console.log(email);
+
+      // Show the mailbox name
+      document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
       // Ad mails to mailbox
       email.forEach(single_mail => {
 
@@ -164,8 +171,7 @@ function load_mailbox(mailbox) {
           element.classList.add("mail-unread")
         }
         element.innerHTML =
-          `<div>${single_mail.archived}</div>
-          <div class="sender">${user}</div>
+          `<div class="sender">${user}</div>
           <div class="subject">${single_mail.subject}</div>
           <div class="timestamp">${single_mail.timestamp}</div>`
 
@@ -174,6 +180,8 @@ function load_mailbox(mailbox) {
 
         // ad fucntion to open mail when its onclik
         element.addEventListener('click', () => read_email(single_mail.id));
+
+
 
       });
 
