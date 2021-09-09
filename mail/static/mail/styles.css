@@ -1,0 +1,73 @@
+textarea {
+    min-height: 400px;
+    resize: none;
+}
+
+#text{
+    background: none;
+    border: none;
+}
+
+.mail-read, .mail-unread{
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr 30%;
+    border: 1px solid #ccc;
+    margin: 1px;
+    padding: 10px;
+    width: 80%;
+}
+
+#archive-button{
+    display: inline-grid;
+    margin-left: 5px;
+}
+
+.mail-unread{
+    background:lightcyan;
+}
+
+.mail-read:hover, .mail-unread:hover{
+    background: lightblue;
+}
+
+
+.sender{
+    font-weight: bold;
+}
+
+
+.sender, .subject, .timestamp, #archive-button{
+    width: fit-content;
+}
+
+.timestamp{
+    color: gray;
+}
+
+.timestamp{
+    
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+#emails-read{
+    padding: 20px;
+}
+
+#emails-read #body{
+    padding: 20px;
+    min-height: 500px;
+}
+
+#emails-read #body #text{
+    font-size: large;
+}
+
+.mail-buttons div{
+    margin: 10px 10px 10px 0px;
+    
+} 
+
+#compose-body{
+    margin-bottom: 10px;
+}
