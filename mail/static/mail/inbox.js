@@ -70,7 +70,7 @@ function read_email(email_id) {
         const subject = `RE: ${email.subject}`;
         const body = `On ${email.timestamp} ${email.sender} wrote:\n${email.body}\n\n`;
 
-        compose_email(recipients, subject, body);
+        compose_email(recipients, subject, body):
 
       });
     });
