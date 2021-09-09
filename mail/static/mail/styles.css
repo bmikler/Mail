@@ -4,12 +4,17 @@ textarea {
 
 
 .mail-read, .mail-unread{
-    display: grid;
+    display: inline-grid;
     grid-template-columns: 20% 50% 30%;
     border: 1px solid #ccc;
     margin: 1px;
     padding: 10px;
     width: 80%;
+}
+
+#archive-button{
+    display: inline-grid;
+    margin-left: 5px;
 }
 
 .mail-unread{
@@ -34,7 +39,7 @@ textarea {
     color: gray;
 }
 
-.timestamp, #archive-button{
+.timestamp{
     
     margin-right: 10px;
     margin-left: auto;

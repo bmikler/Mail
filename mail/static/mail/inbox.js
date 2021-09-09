@@ -62,25 +62,6 @@ function read_email(email) {
       document.querySelector('#timestamp').innerHTML = `${email.timestamp}`;
       document.querySelector('#text').innerHTML = `${email.body}`;
 
-      // Create archive/unarchive button
-      // Check if mail is already archived
-      if (email.archived == true) {
-        var status_to_set = false;
-        var button_name = 'Unarchive';
-      } else {
-        var status_to_set = true;
-        var button_name = 'Archive';
-      }
-
-      // Create buttons
-      document.querySelector('.mail-buttons').innerHTML =
-        `<div class="btn btn-primary" id="replay-button">Replay</div>
-      <div class="btn btn-secondary" id="archive-button">${button_name}</div>`
-
-      // archive-button
-      document.querySelector('#archive-button').addEventListener('click', () => archive_mail(email.id, status_to_set));
-   
-
       // Replay butto
 
       document.querySelector('#replay-button').addEventListener('click', () => {
@@ -180,6 +161,25 @@ function load_mailbox(mailbox) {
         // ad fucntion to open mail when its onclik
         element.addEventListener('click', () => read_email(single_mail.id));
 
+        // Create archive button 
+        if (mailbox != 'sent') {
+          const archive_button = document.createElement('div');
+          archive_button.className = "btn btn-secondary"
+          archive_button.id = "archive-button"
+
+          if (single_mail.archived == true) {
+            var status_to_set = false;
+            var button_name = 'Unarchive';
+          } else {
+            var status_to_set = true;
+            var button_name = 'Archive';
+          }
+
+          archive_button.innerHTML = `${button_name}`
+
+          document.querySelector('#emails-view').append(archive_button);
+          archive_button.addEventListener('click', () => archive_mail(single_mail.id, status_to_set));
+        }
 
 
       });
