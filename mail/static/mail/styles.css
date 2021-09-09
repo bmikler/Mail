@@ -5,7 +5,7 @@ textarea {
 
 .mail-read, .mail-unread{
     display: inline-grid;
-    grid-template-columns: 20% 50% 30%;
+    grid-template-columns: 1fr 1fr 30%;
     border: 1px solid #ccc;
     margin: 1px;
     padding: 10px;
@@ -62,3 +62,7 @@ textarea {
     margin: 10px 10px 10px 0px;
     
 } 
+
+#compose-body{
+    margin-bottom: 10px;
+}
