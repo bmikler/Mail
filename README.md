@@ -9,4 +9,8 @@
 * Archive and Unarchive: User can archive and unarchive mails.
 * Reply: User can reply to an email. After click the button user see prefiled compose mail form.
 
-[##Video presentation](https://www.youtube.com/watch?v=Zr6gxRBvf9U)
+## Credits:
+Rest API from CS50 web development course.
+Frontend - HTML/CSS/JS created by me.
+
+[## Video presentation](https://www.youtube.com/watch?v=Zr6gxRBvf9U)
