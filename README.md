@@ -13,4 +13,4 @@
 Rest API from CS50 web development course.
 Frontend - HTML/CSS/JS created by me.
 
-[## Video presentation](https://www.youtube.com/watch?v=Zr6gxRBvf9U)
+# [Video presentation](https://www.youtube.com/watch?v=Zr6gxRBvf9U)
